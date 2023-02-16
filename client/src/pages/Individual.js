@@ -2,26 +2,29 @@ import React, { useState } from "react";
 import {
   BsCheck2Circle,
   BsHeartFill,
-  BsHeart,
-  BsCashCoin,
+  BsHeart,  
   BsGlobe,
   BsTwitter,
   BsLinkedin,
   BsInstagram,
   BsFillTelephoneFill,
 } from "react-icons/bs";
+import { RxCrossCircled} from 'react-icons/rx';
 import { BiCopy } from "react-icons/bi";
 import Map from "../components/Map";
+import { FiMail } from "react-icons/fi";
 const Individual = () => {
-  const [user, setUser] = useState("John Parington");
+  const [name, setName] = useState("John Parington");
+  const [director, setDirector] = useState('');
   const [contact, setContact] = useState("9898989898");
   const [instagram, setInstagram] = useState("link");
   const [twitter, setTwitter] = useState("link");
   const [prsnl, setPrsnl] = useState("link");
+  const [mail, setMail] = useState("link");
   const [linkedIn, setLinkedIn] = useState("link");
 
   const [kyc, setKyc] = useState(false);
-  const [affiliation, setAffiliation] = useState("Individual");
+  const [affiliation, setAffiliation] = useState(0);
   const [wallet, setWallet] = useState(
     "0x1d595281352F8897cd2Cf2ca454c91871593EfA1"
   );
@@ -121,7 +124,7 @@ const Individual = () => {
                   <i className=""></i>
                 </div>
                 <p className="text-xs mt-1 text-center font-semibold">
-                  {affiliation}
+                  {affiliation?'Agency':'Individual'}
                 </p>
               </div>
               <div className="p-2 flex flex-col items-center bg-white rounded-md justify-center shadow-xl cursor-pointer">
@@ -152,7 +155,7 @@ const Individual = () => {
               {/* <!-- Start Content--> */}
               <div className="mb-1 p-4 ">
                 <p className="text-2xl flex font-bold text-black pb-0">
-                  {user}{" "}
+                  {name}{" "}
                   <span
                     onClick={() => setEndorsed(!endorsed)}
                     className="my-auto ml-3"
@@ -218,13 +221,23 @@ const Individual = () => {
                   ) : (
                     <></>
                   )}
+                  {mail ? (
+                    <a className="my-auto" href={instagram}>
+                      <FiMail className="text-pink-500 font-bold" />
+                    </a>
+                  ) : (
+                    <></>
+                  )}
                   {kyc ? (
                     <div className="text-green-400 flex">
                       Verified User{" "}
                       <BsCheck2Circle className="my-auto ml-2 text-green-400" />
                     </div>
                   ) : (
-                    <></>
+                    <div className="text-red-400 flex">
+                      Unverified User{" "}
+                      <RxCrossCircled className="my-auto ml-2 " />
+                    </div>
                   )}
                 </div>
                 {wallet ? (
@@ -312,11 +325,11 @@ const Individual = () => {
                     <Map
                       className="w-96 h-96"
                       location={[22.3850051, 71.745261]}
-                      user={user}
+                      user={name}
                     />
                   </div>
                 </div>
-                <div className="relative w-full h-52 bg-cover bg-center group rounded-lg overflow-hidden shadow-lg transition duration-300 ease-in-out">
+                {/* <div className="relative w-full h-52 bg-cover bg-center group rounded-lg overflow-hidden shadow-lg transition duration-300 ease-in-out">
                   <div className="absolute inset-0 bg-yellow-600 bg-opacity-75 transition duration-300 ease-in-out"></div>
                   <div className="relative w-full h-full px-4 sm:px-6 lg:px-4 flex items-center">
                     <div>
@@ -330,7 +343,7 @@ const Individual = () => {
                       <h3 className="text-lg mt-2 text-yellow-100 ">Hi</h3>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               {/* <!-- End Content--> */}

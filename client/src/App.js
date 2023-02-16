@@ -9,22 +9,26 @@ import {
   studioProvider,
 } from "@livepeer/react";
 import SignUp from "./pages/SignUp";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
 const client = createReactClient({
   provider: studioProvider({ apiKey: process.env.REACT_APP_LIVEPEER }),
 });
 function App() {
   return (
     <div className="w-screen">
-      <Navbar />
-      <div>
-        <SignUp/>
-        {/* <Individual /> */}
-        {/* <Finder/> */}
-        {/* <LivepeerConfig client={client}>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>          
+          <Route path='/' element={<Home/>}/>
+          <Route path='/' element={<Individual/>}/>
+          <Route path='/signup' element={<SignUp/>}/>
+          {/* <Finder/> */}
+          {/* <LivepeerConfig client={client}>
           <Stream />
         </LivepeerConfig> */}
-      </div>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

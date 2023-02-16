@@ -26,7 +26,7 @@
     font-size: 1.3em;
   }
   
-  @media screen and (min-width: 799px) {
+  /* @media screen and (min-width: 799px) {
     .google-map {
       height: 80vh;
     }
@@ -43,4 +43,4 @@
     .pin-icon {
       font-size: 10vw;
     }
-  }
+  } */
