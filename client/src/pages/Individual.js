@@ -2,20 +2,23 @@ import React, { useState } from "react";
 import {
   BsCheck2Circle,
   BsHeartFill,
-  BsHeart,  
+  BsHeart,
   BsGlobe,
   BsTwitter,
   BsLinkedin,
   BsInstagram,
-  BsFillTelephoneFill,
+  BsFillTelephoneFill,  
+  BsChat,
 } from "react-icons/bs";
-import { RxCrossCircled} from 'react-icons/rx';
+import { RxCrossCircled } from "react-icons/rx";
 import { BiCopy } from "react-icons/bi";
 import Map from "../components/Map";
 import { FiMail } from "react-icons/fi";
+import useUser from "../hooks/useUser";
 const Individual = () => {
+  const { user } = useUser();
   const [name, setName] = useState("John Parington");
-  const [director, setDirector] = useState('');
+  const [director, setDirector] = useState("");
   const [contact, setContact] = useState("9898989898");
   const [instagram, setInstagram] = useState("link");
   const [twitter, setTwitter] = useState("link");
@@ -23,7 +26,7 @@ const Individual = () => {
   const [mail, setMail] = useState("link");
   const [linkedIn, setLinkedIn] = useState("link");
 
-  const [kyc, setKyc] = useState(false);
+  const [kyc, setKyc] = useState(true);
   const [affiliation, setAffiliation] = useState(0);
   const [wallet, setWallet] = useState(
     "0x1d595281352F8897cd2Cf2ca454c91871593EfA1"
@@ -124,7 +127,7 @@ const Individual = () => {
                   <i className=""></i>
                 </div>
                 <p className="text-xs mt-1 text-center font-semibold">
-                  {affiliation?'Agency':'Individual'}
+                  {affiliation ? "Agency" : "Individual"}
                 </p>
               </div>
               <div className="p-2 flex flex-col items-center bg-white rounded-md justify-center shadow-xl cursor-pointer">
@@ -260,7 +263,7 @@ const Individual = () => {
                 )}
               </div>
               <div className="grid grid-cols-12 gap-6 border-b-2 pb-5">
-                <div className="col-span-12 sm:col-span-12 md:col-span-6">
+                <div className="col-span-12 sm:col-span-12 md:col-span-8">
                   <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 mt-3">
                     <div className="p-4 flex gap-2 justify-center items-center">
                       <p className="text-lg font-bold pb-0">Age</p>
@@ -275,7 +278,8 @@ const Individual = () => {
                         {seeks}
                       </p>
                     </div>
-                    <div className="p-4 flex">
+                    <div className="p-4 flex gap-2 justify-center items-center">
+                      <p className="text-lg font-bold">Received</p>
                       <div className="w-full">
                         <p
                           className="text-sm text-gray-400"
@@ -296,6 +300,9 @@ const Individual = () => {
                           </div>
                         </div>
                       </div>
+                    </div>
+                    <div className="p-4 flex">
+                      <div className="w-full flex"></div>
                       {/* <BsCashCoin className="ml-1 w-16 h-8 my-auto text-yellow-400 " /> */}
                       {/* <p className="text-xs font-semibold text-gray-400 mt-2"></p> */}
                     </div>
@@ -351,6 +358,23 @@ const Individual = () => {
           </main>
         </div>
       </div>
+      {user?.address !== wallet ? (
+        <div className="fixed bottom-3 right-5 mb-4 z-10">
+          <div>
+            <div
+              title="Chat"
+              className="cursor-pointer w-16 h-16 flex justify-center items-center rounded-full transition-all shadow hover:shadow-lg transform hover:scale-110 hover:rotate-12"
+            >
+              <BsChat
+                className=" object-cover text-indigo-600 object-center w-10 h-10 transition-all duration-75 transform hover:scale-110 hover:rotate-12"
+                alt="Chat"
+              />
+            </div>
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
       {/* </body> */}
     </div>
   );

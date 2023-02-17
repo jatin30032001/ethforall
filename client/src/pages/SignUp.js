@@ -8,8 +8,11 @@ import { MapContainer } from "react-leaflet";
 import "../components/map.css";
 import NewMap from "../components/NewMap";
 import Connect from "../components/Connect";
+import UploadFiles from "../components/UploadFiles";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [ctr, setCtr] = useState(0);
   const [user, setUser] = useState();
   const [affiliation, setAffiliation] = useState();
@@ -28,7 +31,10 @@ const SignUp = () => {
     <div>
       <div className="max-w-md m-auto mt-6 relative">
         {user === 1 && ctr > 2 ? (
-          <button className="absolute top-8 right-2 bg-gray-400 rounded py-1 px-3">
+          <button
+            onClick={() => ctr!==5?setCtr(ctr + 1):navigate('/user')}
+            className="absolute top-8 right-2 bg-gray-400 rounded py-1 px-3"
+          >
             Skip
           </button>
         ) : (
@@ -91,6 +97,7 @@ const SignUp = () => {
         ) : (
           <></>
         )}
+        {ctr === 5 ? <UploadFiles /> : <></>}
       </div>
       {location.length === 2 ? (
         <div className="w-full h-[400px]">

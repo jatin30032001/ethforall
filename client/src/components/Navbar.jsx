@@ -1,11 +1,18 @@
-import React from "react";
-import { BsFillChatFill } from "react-icons/bs";
+import React, { useState } from "react";
+import { BsCameraVideo, BsFillChatFill } from "react-icons/bs";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import useUser from "../hooks/useUser";
 import Finder from "./Finder";
 
 const Navbar = () => {
-    const handleSubmit = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [account, setAccount] = useState();
+  const [stream, setStream] = useState(false);
+  const [streamName, setStreamName] = useState('');
 
-    }
+  const { user } = useUser();
+  const handleSubmit = () => {};
   return (
     <div className="bg-indigo-600 w-full">
       <div className="flex flex-wrap place-items-center w-full">
@@ -13,14 +20,20 @@ const Navbar = () => {
           {/* <!-- navbar --> */}
           <nav className="flex justify-between text-white w-full">
             <div className="px-5 xl:px-12 py-6 flex justify-between w-full items-center">
-              <a className="text-3xl font-bold font-heading" href="/">
-                {/* <!-- <img className="h-9" src="logo.png" alt="logo"> --> */}
-                Logo
-              </a>
+              <Link to="/">
+                <div className="text-3xl font-bold font-heading">
+                  {/* <!-- <img className="h-9" src="logo.png" alt="logo"> --> */}
+                  Logo
+                </div>
+              </Link>
               <div className="text-black">
-                  <label>
-                      <input className="rounded px-2 py-1 focus:outline-none" placeholder="Search" onSubmit={handleSubmit}></input>
-                  </label>
+                <label>
+                  <input
+                    className="rounded px-2 py-1 focus:outline-none"
+                    placeholder="Search"
+                    onSubmit={handleSubmit}
+                  ></input>
+                </label>
               </div>
               {/* <Finder /> */}
               {/* <!-- Nav Links --> */}
@@ -70,25 +83,33 @@ const Navbar = () => {
                   </span>
                 </a>*/}
 
-                <a
-                  className="flex items-center hover:text-gray-200"
-                  href="/"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 hover:text-gray-200"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </a>
+                {account ? (
+                  <Link to="/user">
+                    <a
+                      className="flex items-center hover:text-gray-200"
+                      href="/user"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6 hover:text-gray-200"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                    </a>
+                  </Link>
+                ) : (
+                  <Link to="/signup">
+                    <div>Create Account</div>
+                  </Link>
+                )}
               </div>
             </div>
             {/* <!-- Responsive navbar --> */}
@@ -132,19 +153,25 @@ const Navbar = () => {
         </section>
       </div>
       {/* <!-- Does this resource worth a follow? --> */}
-      <div className="fixed bottom-3 right-5 mb-4 z-10">
-        <div>
-          <div
-            title="Chat"
-            className="cursor-pointer w-16 h-16 flex justify-center items-center rounded-full transition-all shadow hover:shadow-lg transform hover:scale-110 hover:rotate-12"
-          >
-            <BsFillChatFill
-              className=" object-cover text-green-400 object-center w-10 h-10 transition-all duration-75 transform hover:scale-110 hover:rotate-12"
-              alt="Chat"
-            />
+      {user?.kyc === undefined && location.pathname !== '/create-stream' ? (
+        <div className="fixed bottom-3 right-24 mb-4 z-10">
+          <div className="">
+            <div
+              title="Stream Now"
+              className="cursor-pointer peer w-16 h-16 flex flex-col ml-auto justify-center items-center rounded-full shadow transition-all hover:shadow-lg transform hover:scale-110 hover:-rotate-12"
+            >
+              <BsCameraVideo
+                onClick={() => navigate('/create-stream')}
+                className=" object-cover text-indigo-600 object-center w-10 h-10 transition-all duration-75 transform hover:scale-110 hover:-rotate-12"
+                alt="Stream Now"
+              />
+            </div>
           </div>
         </div>
-      </div>{" "}
+      ) : (
+        <></>
+      )}
+      {}
     </div>
   );
 };

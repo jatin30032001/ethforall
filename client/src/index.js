@@ -9,6 +9,13 @@ import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import { polygonMumbai } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
+import { BrowserRouter } from "react-router-dom";
+
+import {
+  createReactClient,
+  LivepeerConfig,
+  studioProvider,
+} from "@livepeer/react";
 
 const mantleChain = {
   id: 5001,
@@ -59,15 +66,22 @@ if (typeof window !== "undefined") {
     webSocketProvider,
   });
 }
+const livepeerClient = createReactClient({
+  provider: studioProvider({ apiKey: process.env.REACT_APP_LIVEPEER }),
+});
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <WagmiConfig client={client}>
       <RainbowKitProvider chains={chains}>
+      <LivepeerConfig client={livepeerClient}>
+      <BrowserRouter>
         <App />
+        </BrowserRouter>
+        </LivepeerConfig>
       </RainbowKitProvider>
     </WagmiConfig>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

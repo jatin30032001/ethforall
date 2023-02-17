@@ -18,7 +18,7 @@ function Record({ streamId }) {
   });
 //   console.log("Stream: ", updateStream);
   return (
-    <div>
+    <div className="flex space-x-1 justify-evenly">
       <button
         disabled={status === "loading" || stream?.record || !updateStream}
         onClick={() => {
@@ -28,10 +28,10 @@ function Record({ streamId }) {
         Enable Recording
       </button>
       {stream && (
-        <>
-          <div>Stream Name: {stream?.name}</div>
-          <div>Recording?: {String(Boolean(stream.record))}</div>
-        </>
+        <div>
+          <div className="">Stream Name: {stream?.name}</div>
+          {/* <div>Recording?: {String(Boolean(stream.record))}</div> */}
+        </div>
       )}
       {error && <div>{error.message}</div>}
     </div>

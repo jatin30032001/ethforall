@@ -9,7 +9,6 @@ import {
 
 const Connect = ({setCtr, name, twitter, instagram, mail, linkedin, prsnl, setTwitter, setInstagram, setMail, setLinkedin, setPrsnl}) => {    
     const handleSubmit = () => {
-
         setCtr(5);
     }
   return (
@@ -82,7 +81,7 @@ const Connect = ({setCtr, name, twitter, instagram, mail, linkedin, prsnl, setTw
           onClick={() => handleSubmit()}
           className="w-3/4 p-3 rounded bg-indigo-600 text-white"
         >
-          Finish
+          Let's end it!
         </button>
         <div className="m-2">Let's make them trust you</div>
       </div>
