@@ -1,13 +1,21 @@
 import Navbar from "./components/Navbar";
 import Individual from "./pages/Individual";
 import "./App.css";
+import Finder from "./components/Finder";
+import Stream from "./pages/Stream";
 import io from "socket.io-client";
+import { useState, useEffect } from 'react';
 
+import { Auth, useAuth } from "@arcana/auth-react";
+import {
+  createReactClient,
+  LivepeerConfig,
+  studioProvider,
+} from "@livepeer/react";
 import SignUp from "./pages/SignUp";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import useAddress from "./hooks/useUser";
-import { useEffect, useState } from "react";
 import Streamer from "./pages/Streamer";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,6 +24,15 @@ import WatchStream from "./pages/WatchStream";
 const socket = io.connect("http://localhost:4000");
 
 function App() {
+  const auth = useAuth();
+
+  useEffect(() => {
+    if (window !== undefined && auth !== undefined)
+      console.log(auth?.user);
+
+
+  }, [auth]);
+
   const { address } = useAddress();
   const [data, setData] = useState();
   useEffect(() => {    
@@ -27,27 +44,12 @@ function App() {
   }, [socket]);
   const navigate = useNavigate();
   return (
-    <div className="w-screen">      
-      
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}          
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"          
-          onClick={() => navigate('/watch-stream', {state: {stream: {name:data?.streamName, playbackId: data?.playbackId}}})}
-        />      
+    <div className="w-screen">
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/user" element={<Individual />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/create-stream" element={<Streamer />} />
-          <Route path="/watch-stream" element={<WatchStream />} />
+        <Routes>          
+          <Route path='/' element={<Home/>}/>
+          <Route path='/' element={<Individual/>}/>
+          <Route path='/signup' element={<SignUp/>}/>
           {/* <Finder/> */}
         </Routes>
       
