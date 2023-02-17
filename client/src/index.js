@@ -3,12 +3,17 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import "@rainbow-me/rainbowkit/styles.css";
+import { AuthProvider, CHAIN} from "@arcana/auth";
+import { ProvideAuth } from "@arcana/auth-react";
 
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import { polygonMumbai } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
+
+
+
 
 const mantleChain = {
   id: 5001,
@@ -59,12 +64,93 @@ if (typeof window !== "undefined") {
     webSocketProvider,
   });
 }
+
+const auprovider = new AuthProvider(process.env.REACT_APP_ARCANA_APP_ID,{ network: 'testnet', //defaults to 'testnet'
+position: 'left', //defaults to right
+theme: 'light', //defaults to dark
+alwaysVisible: true, //defaults to true which is Full UI mode
+chainConfig: {
+  chainId: CHAIN.POLYGON_MAINNET, //defaults to CHAIN.ETHEREUM_MAINNET
+  rpcUrl: 'https://polygon-rpc.com', //defaults to 'https://rpc.ankr.com/eth'
+},})
+
+try {
+auprovider.init()
+} catch (e) {
+  // Handle exception case
+}
+
+
+
+
+
+// Assuming Auth SDK is integrated and initialized
+try {
+  provider = auprovider.provider
+  const connected = auprovider.isLoggedIn()
+  console.log({ connected })
+  setHooks()
+} catch (e) {
+  // Handle exception case
+}
+
+// setHooks: Manage chain or account switch in Arcana wallet
+function setHooks() {
+  provider.on('connect', async (params) => {
+    console.log({ type: 'connect', params: params })
+    const isLoggedIn = await auprovider.isLoggedIn()
+    console.log({ isLoggedIn })
+  })
+  provider.on('accountsChanged', (params) => {
+    //Handle
+    console.log({ type: 'accountsChanged', params: params })
+  })
+  provider.on('chainChanged', async (params) => {
+    console.log({ type: 'chainChanged', params: params })
+  })
+}
+
+async function signTransaction() {
+
+  const { sig } = await provider.request({
+    method: 'eth_signTransaction',
+    params: [
+      {
+        from:'0x9dE5B1C0e3809e15d9D0a77b4C908acf3393dc17', // sender account address
+        gasPrice: 0,
+        to: '0xE28F01Cf69f27Ee17e552bFDFB7ff301ca07e780', // receiver account address
+        value: '0x0de0b6b3a7640000',
+      },
+    ],
+  })
+  console.log({ sig })
+}
+
+
+try {
+ signTransaction()
+  } catch (e) {
+    // Handle exception case
+  }
+
+// const value = auprovider.getUser();
+// console.log("Hello")
+// console.log(value);
+
+
+
+
+
+
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <WagmiConfig client={client}>
       <RainbowKitProvider chains={chains}>
-        <App />
+        <ProvideAuth provider={auprovider}>
+      <App />
+    </ProvideAuth>
       </RainbowKitProvider>
     </WagmiConfig>
   </React.StrictMode>

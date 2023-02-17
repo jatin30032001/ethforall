@@ -3,7 +3,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 const Home = () => {
   return (
     <div className='w-full flex flex-col justify-center items-center'>
-        <div className='m-5'><ConnectButton/></div>
+        {/* <div className='m-5'><ConnectButton/></div> */}
     </div>
   )
 }
