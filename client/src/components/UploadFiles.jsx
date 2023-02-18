@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-
-const UploadFiles = ({ setCtr }) => {
+import ABI from '../contract/ABI.json';
+const UploadFiles = ({ setCtr, handleSubmit }) => {
   const [files, setFiles] = useState([]);
   const handleFile = (e) => {
     const newFiles = Array.from(e.target.files);
@@ -20,7 +20,11 @@ const UploadFiles = ({ setCtr }) => {
   const remove = (name) => {
     setFiles(files.filter(file => file.name !== name))
   }
-  function handleSubmit() {}
+  // const { data, isError, isLoading } = useContractRead({
+  //   address: '0x302d534bF08AD8b56e268Af967330Fd215F1052A',
+  //   abi: ABI?.abi,
+  //   functionName: 'getAllFiles',
+  // })
   return (
     <div className="border-t-4 border-indigo-600 overflow-hidden rounded shadow-lg">
       <h3 className="text-xl text-center mt-8 mb-8">Well last thing!</h3>

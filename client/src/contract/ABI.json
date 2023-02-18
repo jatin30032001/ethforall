@@ -1,0 +1,211 @@
+[
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [],
+		"name": "STATE",
+		"outputs": [
+			{
+				"internalType": "enum Charitable.charity_state",
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address payable",
+				"name": "_account",
+				"type": "address"
+			},
+			{
+				"internalType": "bool",
+				"name": "_kyc",
+				"type": "bool"
+			},
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_dob",
+				"type": "string"
+			},
+			{
+				"internalType": "string[]",
+				"name": "_location",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string",
+				"name": "_twitter",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_linkedIn",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_insta",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_mail",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_need",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_affiliation",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_use",
+				"type": "uint256"
+			}
+		],
+		"name": "createUser",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address payable",
+				"name": "reciever",
+				"type": "address"
+			}
+		],
+		"name": "donate",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "transactions",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "address_of_reciever",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "address_of_donor",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount_sent",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "users",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"internalType": "bool",
+				"name": "kyc",
+				"type": "bool"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "dob",
+				"type": "string"
+			},
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "twitter",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "linkedIn",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "insta",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "mail",
+						"type": "string"
+					}
+				],
+				"internalType": "struct Charitable.social",
+				"name": "socials",
+				"type": "tuple"
+			},
+			{
+				"internalType": "uint256",
+				"name": "need",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "affiliation",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "use",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]

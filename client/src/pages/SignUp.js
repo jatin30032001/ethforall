@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Affiliation from "../components/Affiliation";
 import Recepient from "../components/Recepient";
 import User from "../components/User";
@@ -10,9 +10,15 @@ import NewMap from "../components/NewMap";
 import Connect from "../components/Connect";
 import UploadFiles from "../components/UploadFiles";
 import { useNavigate } from "react-router-dom";
-
+import GetContract from "../hooks/GetContract";
+import useUser from "../hooks/useUser";
+import { useAccount } from "wagmi";
 const SignUp = () => {
   const navigate = useNavigate();
+
+  // const [submit, setSubmit] = useState(false);
+  // const { address } = useUser();
+
   const [ctr, setCtr] = useState(0);
   const [user, setUser] = useState();
   const [affiliation, setAffiliation] = useState();
@@ -27,12 +33,47 @@ const SignUp = () => {
   const [mail, setMail] = useState("");
   const [linkedin, setLinkedin] = useState("");
 
+  const contract = GetContract();
+  const { address, isConnecting, isDisconnected } = useAccount();
+
+  const handleSubmit = async () => {
+    console.log("Here");
+    try {
+      const socials = {
+        twitter: twitter,
+        linkedIn: linkedin,
+        insta: instagram,
+        mail: mail,
+      };
+      console.log(address);
+      const loc =
+        location !== [] ? [location[0].toString(), location[1].toString()] : [];
+      const res = await contract.createUser(
+        address,
+        true,
+        name,
+        dob,
+        loc,
+        twitter,
+        linkedin,
+        instagram,
+        mail,
+        100,
+        affiliation,
+        user
+      );
+      console.log(res);
+    } catch (e) {
+      console.log("Error: ", e);
+    }
+  };
+
   return (
     <div>
       <div className="max-w-md m-auto mt-6 relative">
         {user === 1 && ctr > 2 ? (
           <button
-            onClick={() => ctr!==5?setCtr(ctr + 1):navigate('/user')}
+            onClick={() => (ctr !== 5 ? setCtr(ctr + 1) : navigate("/user"))}
             className="absolute top-8 right-2 bg-gray-400 rounded py-1 px-3"
           >
             Skip
@@ -97,7 +138,11 @@ const SignUp = () => {
         ) : (
           <></>
         )}
-        {ctr === 5 ? <UploadFiles /> : <></>}
+        {ctr === 5 ? (
+          <UploadFiles setCtr={setCtr} handleSubmit={handleSubmit} />
+        ) : (
+          <></>
+        )}
       </div>
       {location.length === 2 ? (
         <div className="w-full h-[400px]">

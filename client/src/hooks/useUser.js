@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import AddressContext from "../context/UserProvider";
+import UserContext from "../context/UserProvider";
 const useUser = () => {
-  return useContext(AddressContext);
+  return useContext(UserContext);
 }
 
 export default useUser;

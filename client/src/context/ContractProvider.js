@@ -1,15 +1,20 @@
+import { ethers } from "ethers";
 import { useState } from "react";
 import { createContext } from "react";
-import { useContract } from "wagmi";
+import { useContract, useSigner } from "wagmi";
+// import { useContract } from "wagmi";
+import abi from '../contract/ABI.json'
+// const signer = new ethers.providers
+const DeployedContractContext = createContext({});
 
-const ContractContext = createContext({});
 export const ContractProvider = ({children}) => {
-  const contract = useContract('');
+  
+  const [contract, setContract] = useState();
   return (
-    <ContractContext.Provider value={{contract}}>
+    <DeployedContractContext.Provider value={{contract, setContract}}>
       {children}
-    </ContractContext.Provider>
+    </DeployedContractContext.Provider>
   )
 }
 
-export default ContractContext;
+export default DeployedContractContext;
