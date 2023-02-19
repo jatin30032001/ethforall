@@ -10,7 +10,7 @@ const Affiliation = ({ setCtr, setAffiliation }) => {
       <h3 className="text-xl text-center mt-8 mb-8">Let's be honest!</h3>
       <div className="px-4 mb-4">
         <button
-          onClick={() => handleSubmit(0)}
+          onClick={() => handleSubmit(1)}
           className="border border-gray rounded w-full p-3 text-center hover:bg-indigo-600 hover:text-white"
         >
           Individual
@@ -18,7 +18,7 @@ const Affiliation = ({ setCtr, setAffiliation }) => {
       </div>
       <div className="px-4 mb-4">
         <button
-          onClick={() => handleSubmit(1)}
+          onClick={() => handleSubmit(2)}
           className="border border-gray rounded w-full p-3 text-center hover:bg-indigo-600 hover:text-white"
         >
           Agency

@@ -20,7 +20,7 @@ const Navbar = () => {
           {/* <!-- navbar --> */}
           <nav className="flex justify-between text-white w-full">
             <div className="px-5 xl:px-12 py-6 flex justify-between w-full items-center">
-              <Link to="/">
+              <Link to="/home">
                 <div className="text-3xl font-bold font-heading">
                   {/* <!-- <img className="h-9" src="logo.png" alt="logo"> --> */}
                   Logo

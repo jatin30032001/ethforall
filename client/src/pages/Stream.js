@@ -6,60 +6,60 @@ import Record from "./Record";
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:4000");
 
-const stream = {
-  lastSeen: 0,
-  isActive: false,
-  record: false,
-  suspended: false,
-  sourceSegments: 0,
-  transcodedSegments: 0,
-  sourceSegmentsDuration: 0,
-  transcodedSegmentsDuration: 0,
-  sourceBytes: 0,
-  transcodedBytes: 0,
-  profiles: [
-    {
-      name: "720p",
-      bitrate: 2000000,
-      fps: 30,
-      width: 1280,
-      height: 720,
-    },
-    {
-      name: "480p",
-      bitrate: 1000000,
-      fps: 30,
-      width: 854,
-      height: 480,
-    },
-    {
-      name: "360p",
-      bitrate: 500000,
-      fps: 30,
-      width: 640,
-      height: 360,
-    },
-  ],
-  name: "New",
-  kind: "stream",
-  userId: "987bb578-7f13-4666-bcd3-bb0d089090cb",
-  renditions: {},
-  id: "c7a7638e-2ba2-48ae-9e4b-11e559feefb7",
-  createdAt: 1676640073933,
-  streamKey: "c7a7-bdrv-ybmp-6wjk",
-  playbackId: "c7a7k3uxbtmhl1lz",
-  createdByTokenName: "ethforall",
-  multistream: {
-    targets: [],
-  },
-  rtmpIngestUrl: "rtmp://rtmp.livepeer.com/live/c7a7-bdrv-ybmp-6wjk",
-  playbackUrl: "https://livepeercdn.com/hls/c7a7k3uxbtmhl1lz/index.m3u8",
-};
+// const stream = {
+//   lastSeen: 0,
+//   isActive: false,
+//   record: false,
+//   suspended: false,
+//   sourceSegments: 0,
+//   transcodedSegments: 0,
+//   sourceSegmentsDuration: 0,
+//   transcodedSegmentsDuration: 0,
+//   sourceBytes: 0,
+//   transcodedBytes: 0,
+//   profiles: [
+//     {
+//       name: "720p",
+//       bitrate: 2000000,
+//       fps: 30,
+//       width: 1280,
+//       height: 720,
+//     },
+//     {
+//       name: "480p",
+//       bitrate: 1000000,
+//       fps: 30,
+//       width: 854,
+//       height: 480,
+//     },
+//     {
+//       name: "360p",
+//       bitrate: 500000,
+//       fps: 30,
+//       width: 640,
+//       height: 360,
+//     },
+//   ],
+//   name: "New",
+//   kind: "stream",
+//   userId: "987bb578-7f13-4666-bcd3-bb0d089090cb",
+//   renditions: {},
+//   id: "c7a7638e-2ba2-48ae-9e4b-11e559feefb7",
+//   createdAt: 1676640073933,
+//   streamKey: "c7a7-bdrv-ybmp-6wjk",
+//   playbackId: "c7a7k3uxbtmhl1lz",
+//   createdByTokenName: "ethforall",
+//   multistream: {
+//     targets: [],
+//   },
+//   rtmpIngestUrl: "rtmp://rtmp.livepeer.com/live/c7a7-bdrv-ybmp-6wjk",
+//   playbackUrl: "https://livepeercdn.com/hls/c7a7k3uxbtmhl1lz/index.m3u8",
+// };
 const Stream = () => {
   const [streamName, setStreamName] = useState("");
   const {
     mutate: createStream,
-    // data: stream,
+    data: stream,
     status,
   } = useCreateStream(streamName ? { name: streamName } : null);
   useEffect(() => {

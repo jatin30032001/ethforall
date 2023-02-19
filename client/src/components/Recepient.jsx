@@ -5,15 +5,19 @@ const Recepient = ({
   setContact,
   setName,
   setDob,
+  setStory,
   name,
   contact,
   dob,
+  story,
+  need,
+  setNeed,
 }) => {
-  const [dd, setDd] = useState(dob ? dob.substring(0, 2) : '');
-  const [mm, setMm] = useState(dob ? dob.substring(4, 7) : '');
-  const [yy, setYy] = useState(dob ? dob.substring(6) : '');
-  const [code, setCode] = useState(contact ? contact.split("-")[0] : '');
-  const [number, setNumber] = useState(contact ? contact.split("-")[1] : '');
+  const [dd, setDd] = useState(dob ? dob.substring(0, 2) : "");
+  const [mm, setMm] = useState(dob ? dob.substring(4, 7) : "");
+  const [yy, setYy] = useState(dob ? dob.substring(6) : "");
+  const [code, setCode] = useState(contact ? contact.split("-")[0] : "");
+  const [number, setNumber] = useState(contact ? contact.split("-")[1] : "");
   const date = new Date();
   function handleSubmit() {
     setDob(dd + "/" + mm + "/" + yy);
@@ -34,6 +38,17 @@ const Recepient = ({
           placeholder="Full Name"
           autoComplete="off"
           value={name}
+        />
+      </div>
+      <div className="px-4 mb-4">
+        <input
+          id="need"
+          type="number"
+          onChange={(e) => setNeed(e.target.value)}
+          className="border border-gray rounded w-full p-3 text-center"
+          placeholder="Need in Wei"
+          autoComplete="off"
+          value={need}
         />
       </div>
       <div className="px-4 mb-4 flex items-center">
@@ -70,6 +85,7 @@ const Recepient = ({
       </div>
       <div className="px-4 mb-4">
         <input
+          title="Country Code"
           id="code"
           type="text"
           onChange={(e) => setCode(e.target.value)}
@@ -79,6 +95,7 @@ const Recepient = ({
           value={code}
         />
         <input
+          title="Contact Number"
           id="number"
           type="text"
           onChange={(e) => setNumber(e.target.value)}
@@ -86,6 +103,17 @@ const Recepient = ({
           placeholder="Contact"
           autoComplete="off"
           value={number}
+        />
+      </div>
+      <div className="px-4 mb-4">
+        <textarea
+          id="story"
+          type="text"
+          onChange={(e) => setStory(e.target.value)}
+          className="border border-gray rounded w-full p-3 text-center"
+          placeholder="Your Story"
+          autoComplete="off"
+          value={story}
         />
       </div>
       <div className="px-4 text-center mb-6 text-red-600">

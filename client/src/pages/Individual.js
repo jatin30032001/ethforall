@@ -7,7 +7,7 @@ import {
   BsTwitter,
   BsLinkedin,
   BsInstagram,
-  BsFillTelephoneFill,  
+  BsFillTelephoneFill,
   BsChat,
 } from "react-icons/bs";
 import { RxCrossCircled } from "react-icons/rx";
@@ -15,27 +15,36 @@ import { BiCopy } from "react-icons/bi";
 import Map from "../components/Map";
 import { FiMail } from "react-icons/fi";
 import useUser from "../hooks/useUser";
+import { useLocation } from "react-router-dom";
 const Individual = () => {
-  const { user } = useUser();
-  const [name, setName] = useState("John Parington");
-  const [director, setDirector] = useState("");
+  const { state } = useLocation();
+  const recepient = state.recepient;
+  const { address } = useUser();
+  console.log(address);
+  //story = recepient[3]
+  //dob = recepient[4]
+
+  // const [recepient[2], setName] = useState("John Parington");
+  // const [director, setDirector] = useState("");
   const [contact, setContact] = useState("9898989898");
-  const [instagram, setInstagram] = useState("link");
-  const [twitter, setTwitter] = useState("link");
-  const [prsnl, setPrsnl] = useState("link");
-  const [mail, setMail] = useState("link");
-  const [linkedIn, setLinkedIn] = useState("link");
+  // const [recepient[5][2], setInstagram] = useState("link");
+  // const [recepient[5][0], setTwitter] = useState("link");
+  // const [recepient[5][4], setPrsnl] = useState("link");
+  // const [recepient[5][3], setMail] = useState("link");
+  // const [recepient[5][1], setLinkedIn] = useState("link");
+  console.log(recepient[10]._hex);
+  // const [recepient[0], setKyc] = useState(true);
+  const affiliation = recepient[10]._hex;
+  // const [recepient[1], setWallet] = useState(
+  //   "0x1d595281352F8897cd2Cf2ca454c91871593EfA1"
+  // );
+  const loc = [Number(recepient.location[0]), Number(recepient.location[1])];
 
-  const [kyc, setKyc] = useState(true);
-  const [affiliation, setAffiliation] = useState(0);
-  const [wallet, setWallet] = useState(
-    "0x1d595281352F8897cd2Cf2ca454c91871593EfA1"
-  );
-
-  const [seeks, setSeeks] = useState(1000);
+  const seeks = recepient.need._hex;
+  const received = recepient.received._hex;
   const [endorses, setEndorses] = useState(11);
   const [endorsed, setEndorsed] = useState(true);
-  const [received, setReceived] = useState(200);
+  // const [received, setReceived] = useState(200);
   const percent = (received / seeks) * 100;
   return (
     <div>
@@ -91,13 +100,13 @@ const Individual = () => {
             <div className="grid gap-4 grid-cols-2 mt-6">
               {/* <!-- Start Navitem --> */}
               <div
-                title={kyc ? "Verified" : "Unverified"}
+                title={recepient[0] ? "Verified" : "Unverified"}
                 className="p-2 flex flex-col items-center bg-white rounded-md justify-center shadow-xl cursor-pointer"
               >
                 <div
                   className={
                     "rounded-full p-1 flex flex-col items-center " +
-                    (kyc ? "bg-green-400" : "bg-red-400")
+                    (recepient[0] ? "bg-green-400" : "bg-red-400")
                   }
                 >
                   <i className=""></i>
@@ -105,13 +114,13 @@ const Individual = () => {
                 <p className="text-xs mt-1 text-center font-semibold">KYC</p>
               </div>
               <div
-                title={wallet ? "Wallet Connected" : "No Wallet"}
+                title={recepient[1] ? "Wallet Connected" : "No Wallet"}
                 className="p-2 flex flex-col items-center bg-white rounded-md justify-center shadow-xl cursor-pointer"
               >
                 <div
                   className={
                     "rounded-full p-1 flex flex-col items-center " +
-                    (wallet ? "bg-green-400" : "bg-red-400")
+                    (recepient[1] ? "bg-green-400" : "bg-red-400")
                   }
                 >
                   <i className=""></i>
@@ -127,7 +136,7 @@ const Individual = () => {
                   <i className=""></i>
                 </div>
                 <p className="text-xs mt-1 text-center font-semibold">
-                  {affiliation ? "Agency" : "Individual"}
+                  {affiliation === 2 ? "Agency" : "Individual"}
                 </p>
               </div>
               <div className="p-2 flex flex-col items-center bg-white rounded-md justify-center shadow-xl cursor-pointer">
@@ -158,7 +167,7 @@ const Individual = () => {
               {/* <!-- Start Content--> */}
               <div className="mb-1 p-4 ">
                 <p className="text-2xl flex font-bold text-black pb-0">
-                  {name}{" "}
+                  {recepient[2]}{" "}
                   <span
                     onClick={() => setEndorsed(!endorsed)}
                     className="my-auto ml-3"
@@ -196,42 +205,42 @@ const Individual = () => {
                   ) : (
                     <></>
                   )}
-                  {linkedIn ? (
-                    <a className="my-auto" href={linkedIn}>
+                  {recepient[5][1] ? (
+                    <a className="my-auto" href={recepient[5][1]}>
                       <BsLinkedin className="text-blue-500" />
                     </a>
                   ) : (
                     <></>
                   )}
-                  {twitter ? (
-                    <a className="my-auto" href={twitter}>
+                  {recepient[5][0] ? (
+                    <a className="my-auto" href={recepient[5][0]}>
                       <BsTwitter className="text-blue-500" />
                     </a>
                   ) : (
                     <></>
                   )}
-                  {prsnl ? (
-                    <a className="my-auto" href={prsnl}>
+                  {recepient[5][4] ? (
+                    <a className="my-auto" href={recepient[5][4]}>
                       <BsGlobe className="text-blue-500" />
                     </a>
                   ) : (
                     <></>
                   )}
-                  {instagram ? (
-                    <a className="my-auto" href={instagram}>
+                  {recepient[5][2] ? (
+                    <a className="my-auto" href={recepient[5][2]}>
                       <BsInstagram className="text-pink-500 font-bold" />
                     </a>
                   ) : (
                     <></>
                   )}
-                  {mail ? (
-                    <a className="my-auto" href={instagram}>
+                  {recepient[5][3] ? (
+                    <a className="my-auto" href={recepient[5][2]}>
                       <FiMail className="text-pink-500 font-bold" />
                     </a>
                   ) : (
                     <></>
                   )}
-                  {kyc ? (
+                  {recepient[0] ? (
                     <div className="text-green-400 flex">
                       Verified User{" "}
                       <BsCheck2Circle className="my-auto ml-2 text-green-400" />
@@ -243,18 +252,18 @@ const Individual = () => {
                     </div>
                   )}
                 </div>
-                {wallet ? (
+                {recepient[1] ? (
                   <div className="flex justify-start items-center mt-3">
                     <span className="font-semibold mr-2">Ethereum Wallet:</span>{" "}
                     <span
                       onClick={() => {
-                        navigator.clipboard.writeText(wallet);
+                        navigator.clipboard.writeText(recepient[1]);
                       }}
                       className="flex cursor-pointer hover:text-gray-700"
                     >
-                      {wallet.substring(0, 5).toLowerCase() +
+                      {recepient[1].substring(0, 5).toLowerCase() +
                         "..." +
-                        wallet.substring(38).toLowerCase()}
+                        recepient[1].substring(38).toLowerCase()}
                       <BiCopy className="my-auto ml-2" />
                     </span>
                   </div>
@@ -274,7 +283,7 @@ const Individual = () => {
                     <div className="p-4 flex gap-2 justify-center items-center">
                       <p className="text-lg font-bold">Needs</p>
                       <p className="text-xs font-semibold text-gray-400">
-                        <span>$ </span>
+                        <span>WEI </span>
                         {seeks}
                       </p>
                     </div>
@@ -331,10 +340,22 @@ const Individual = () => {
                   <div className="w-full h-full">
                     <Map
                       className="w-96 h-96"
-                      location={[22.3850051, 71.745261]}
-                      user={name}
+                      location={loc}
+                      user={recepient[2]}
                     />
                   </div>
+                  {recepient?.files?.map((cid, idx) => {
+                    return (
+                      <div key={idx} className="relative w-full h-52 bg-cover bg-center group rounded-lg overflow-hidden shadow-lg transition duration-300 ease-in-out">
+                        {/* <div className="absolute inset-0 bg-blue-900 bg-opacity-75 transition duration-300 ease-in-out"></div> */}
+                        {/* <div className="relative w-full h-full px-4 sm:px-6 lg:px-4 flex items-center"> */}
+                        <div className="w-full h-full">
+                          <img src={'https://gateway.lighthouse.storage/ipfs/'+cid} alt={cid} className="h-full w-full object-center object-cover rounded"></img>
+                        
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
                 {/* <div className="relative w-full h-52 bg-cover bg-center group rounded-lg overflow-hidden shadow-lg transition duration-300 ease-in-out">
                   <div className="absolute inset-0 bg-yellow-600 bg-opacity-75 transition duration-300 ease-in-out"></div>
@@ -358,7 +379,7 @@ const Individual = () => {
           </main>
         </div>
       </div>
-      {user?.address !== wallet ? (
+      {address !== recepient[1] ? (
         <div className="fixed bottom-3 right-5 mb-4 z-10">
           <div>
             <div

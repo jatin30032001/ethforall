@@ -11,13 +11,9 @@ import Connect from "../components/Connect";
 import UploadFiles from "../components/UploadFiles";
 import { useNavigate } from "react-router-dom";
 import GetContract from "../hooks/GetContract";
-import useUser from "../hooks/useUser";
 import { useAccount } from "wagmi";
 const SignUp = () => {
   const navigate = useNavigate();
-
-  // const [submit, setSubmit] = useState(false);
-  // const { address } = useUser();
 
   const [ctr, setCtr] = useState(0);
   const [user, setUser] = useState();
@@ -26,6 +22,9 @@ const SignUp = () => {
   const [contact, setContact] = useState("");
   const [dob, setDob] = useState("");
   const [location, setLocation] = useState([]);
+  const [cids, setCids] = useState([]);
+  const [story, setStory] = useState();
+  const [need, setNeed] = useState();
 
   const [twitter, setTwitter] = useState("");
   const [instagram, setInstagram] = useState("");
@@ -39,30 +38,30 @@ const SignUp = () => {
   const handleSubmit = async () => {
     console.log("Here");
     try {
-      const socials = {
-        twitter: twitter,
-        linkedIn: linkedin,
-        insta: instagram,
-        mail: mail,
-      };
-      console.log(address);
-      const loc =
-        location !== [] ? [location[0].toString(), location[1].toString()] : [];
-      const res = await contract.createUser(
-        address,
-        true,
-        name,
-        dob,
-        loc,
+      const socials = [
         twitter,
         linkedin,
         instagram,
         mail,
-        100,
+        prsnl
+      ];
+      console.log(cids);
+      console.log(address);
+      const loc = location !== [] ? [location[0].toString(), location[1].toString()] : [];
+      const _user = [true,
+        address,
+        name,
+        story,
+        dob,
+        socials,
+        loc,
+        cids,        
+        need,
+        0,
         affiliation,
-        user
-      );
-      console.log(res);
+        user];
+      // const res = await contract.createUser(_user);
+      // console.log(res);
     } catch (e) {
       console.log("Error: ", e);
     }
@@ -71,7 +70,7 @@ const SignUp = () => {
   return (
     <div>
       <div className="max-w-md m-auto mt-6 relative">
-        {user === 1 && ctr > 2 ? (
+        {user === 2 && ctr > 2 ? (
           <button
             onClick={() => (ctr !== 5 ? setCtr(ctr + 1) : navigate("/user"))}
             className="absolute top-8 right-2 bg-gray-400 rounded py-1 px-3"
@@ -95,7 +94,8 @@ const SignUp = () => {
         ) : ctr === 1 ? (
           <Affiliation setAffiliation={setAffiliation} setCtr={setCtr} />
         ) : ctr === 2 ? (
-          affiliation === 0 ? (
+          // affiliation === 1? 
+          (
             <Recepient
               setCtr={setCtr}
               setName={setName}
@@ -104,10 +104,15 @@ const SignUp = () => {
               name={name}
               dob={dob}
               contact={contact}
+              story={story}
+              setStory={setStory}
+              need={need}
+              setNeed={setNeed}
             />
-          ) : (
-            <></>
-          )
+          ) 
+          // : (
+          //   <></>
+          // )
         ) : ctr === 3 ? (
           <div>
             <Location
@@ -139,7 +144,7 @@ const SignUp = () => {
           <></>
         )}
         {ctr === 5 ? (
-          <UploadFiles setCtr={setCtr} handleSubmit={handleSubmit} />
+          <UploadFiles setCtr={setCtr} handleSubmit={handleSubmit} setCids={setCids}/>
         ) : (
           <></>
         )}

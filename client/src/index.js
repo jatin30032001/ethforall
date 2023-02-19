@@ -4,8 +4,11 @@ import "./index.css";
 import App from "./App";
 import "@rainbow-me/rainbowkit/styles.css";
 
+import { AuthProvider, CHAIN } from "@arcana/auth";
+import { ProvideAuth } from "@arcana/auth-react";
+
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { configureChains, createClient, WagmiConfig } from "wagmi";
+import { configureChains, createClient, goerli, WagmiConfig } from "wagmi";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import { polygonMumbai } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
@@ -39,13 +42,14 @@ const mantleChain = {
   testnet: true,
 };
 const { chains, provider, webSocketProvider } = configureChains(
-  [mantleChain, polygonMumbai],
+  [goerli, polygonMumbai],
   [
     jsonRpcProvider({
       rpc: (chain) => {
         if (chain.id === mantleChain.id) return { http: chain.rpcUrls.default };
         if (chain.id === 80001)
           return { http: "https://rpc-mumbai.maticvigil.com" };
+        if (chain.id === 5) return { http: process.env.REACT_APP_ALCHEMY };
         return null;
       },
     }),
@@ -67,6 +71,22 @@ if (typeof window !== "undefined") {
   });
 }
 
+const auprovider = new AuthProvider(process.env.REACT_APP_ARCANA_APP_ID, {
+  network: "testnet", //defaults to 'testnet'
+  position: "left", //defaults to right
+  theme: "light", //defaults to dark
+  alwaysVisible: true, //defaults to true which is Full UI mode
+  chainConfig: {
+    chainId: CHAIN.POLYGON_MAINNET, //defaults to CHAIN.ETHEREUM_MAINNET
+    rpcUrl: "https://polygon-rpc.com", //defaults to 'https://rpc.ankr.com/eth'
+  },
+});
+
+try {
+  auprovider.init();
+} catch (e) {
+  console.log(e);
+}
 
 const livepeerClient = createReactClient({
   provider: studioProvider({ apiKey: process.env.REACT_APP_LIVEPEER }),
@@ -75,8 +95,9 @@ const livepeerClient = createReactClient({
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <WagmiConfig client={client}>
-    <RainbowKitProvider chains={chains}>      
-        <LivepeerConfig client={livepeerClient}>
+    <RainbowKitProvider chains={chains}>
+      <LivepeerConfig client={livepeerClient}>
+        <ProvideAuth provider={auprovider}>
           <ContractProvider>
             <UserProvider>
               <BrowserRouter>
@@ -84,7 +105,8 @@ root.render(
               </BrowserRouter>
             </UserProvider>
           </ContractProvider>
-        </LivepeerConfig>      
+        </ProvideAuth>
+      </LivepeerConfig>
     </RainbowKitProvider>
   </WagmiConfig>
 );
